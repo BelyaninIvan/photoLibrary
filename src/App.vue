@@ -1,10 +1,11 @@
 <script >
   import HeaderComponent from '@/components/HeaderComponent.vue';
   import PhotosList from '@/components/PhotosList.vue';
+  import AddPhotoForm from '@/components/AddPhotoForm.vue';
   
   export default {
     components: {
-      HeaderComponent, PhotosList
+      HeaderComponent, PhotosList, AddPhotoForm
     },
     data() {
       return {
@@ -45,19 +46,8 @@
       }
     },
     methods: {
-      createPhoto() {
-        const newPhoto = {
-          id: Date.now(),
-          url: this.url,
-          alt: 'Фотография',
-          title: this.title,
-          desc: this.desc,
-        };
-        this.photos.push(newPhoto);
-
-        this.url='';
-        this.title='';
-        this.desc='';
+      createPhoto(photo) {
+        this.photos.push(photo);
       }
     }
   }
@@ -98,16 +88,9 @@
     <section>
       <div class="modal" id="createPhoto">
         <h2 class="modal__title">Добавить фогографию</h2>
-        <form class="form" id="addPhoto" @submit.prevent>
-          <input v-model="url" class="form__input" type="text" name="url" placeholder="Введите url на фото">
-          <input v-model="title" class="form__input" type="text" name="name" placeholder="Введите название">
-          <input v-model="desc" class="form__input form__input_type_desc" type="text" name="desc" placeholder="Введите описание">
-          <myButton
-            @click="createPhoto"
-          >
-            Добавить
-          </myButton>
-        </form>
+        <AddPhotoForm
+          @create="createPhoto"
+        />
       </div>
       <div class="modal" id="createUser">
         <h2 class="modal__title">Создать пользователя</h2>
@@ -208,33 +191,5 @@
     text-align: center;
   }
 
-  .form {
-    margin-top: 25px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 20px;
-  }
-
-  .form__input {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: none;
-    width: 85%;
-
-    padding: 10px 15px;
-    background-color: rgba(240, 230, 140, 0.5);
-    border-radius: 10px;
-
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-  }
-
-  .form__input::placeholder {
-    color: rgb(255, 255, 255);
-    opacity: .6;
-  }
+ 
 </style>
