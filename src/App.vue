@@ -102,7 +102,11 @@
           <input v-model="url" class="form__input" type="text" name="url" placeholder="Введите url на фото">
           <input v-model="title" class="form__input" type="text" name="name" placeholder="Введите название">
           <input v-model="desc" class="form__input form__input_type_desc" type="text" name="desc" placeholder="Введите описание">
-          <button @click="createPhoto" class="button" type="submit">Добавить</button>
+          <myButton
+            @click="createPhoto"
+          >
+            Добавить
+          </myButton>
         </form>
       </div>
       <div class="modal" id="createUser">
@@ -114,7 +118,7 @@
           <input class="form__input" type="text" name="city" placeholder="Введите название города">
           <input class="form__input" type="number" name="exp" placeholder="Какой у вас опыт?">
           <input class="form__input" type="text" name="type" placeholder="Введите жанры фотографий">
-          <button class="button" type="submit">Создать</button>
+          <myButton>Создать</myButton>
         </form>
       </div>
     </section>
@@ -184,29 +188,6 @@
     width: 100%;
     margin: 30px auto 0;
     padding: 45px;
-  }
-
-  .button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: none;
-
-    padding: 15px 20px;
-    background-color: rgba(240, 230, 140, 0.5);
-    border-radius: 10px;
-
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-
-    cursor: pointer;
-    transition: all ease-in .7s;
-  }
-
-  .button:hover {
-    opacity: .7;
-    transform: translateY(-3px);
   }
 
   .modal {

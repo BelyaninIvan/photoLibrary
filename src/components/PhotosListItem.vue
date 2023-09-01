@@ -14,7 +14,7 @@
         <li class="item">
             <img :src="photoItem.url" :alt="photoItem.alt" class="item__image">
             <h2 class="item__name">{{ photoItem.title }}</h2>
-            <button class="button" type="button">Подробнее</button>
+            <myButton>Подробнее</myButton>
             <p class="item__desc" style="display: none;">
                 {{ photoItem.desc }}
             </p>
