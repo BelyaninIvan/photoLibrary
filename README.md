@@ -1,6 +1,6 @@
 # photoLibrary
 
-This template should help get you started developing with Vue 3 in Vite.
+Данный проект является своеобразной визиткой для людей, занимающихся фотографиями. На данном ресурсе пользователь может создать профиль фотографа и выкладывать на него свои фотографии с подробным описанием.
 
 ## Recommended IDE Setup
 
