@@ -2,11 +2,12 @@
   import HeaderComponent from '@/components/HeaderComponent.vue';
   import PhotosList from '@/components/PhotosList.vue';
   import AddPhotoForm from '@/components/AddPhotoForm.vue';
+  import AddUserForm from '@/components/AddUserForm.vue';
   import axios from 'axios';
   
   export default {
     components: {
-      HeaderComponent, PhotosList, AddPhotoForm
+      HeaderComponent, PhotosList, AddPhotoForm, AddUserForm
     },
     data() {
       return {
@@ -22,17 +23,25 @@
           }
         ],
         photos: [],
-        dialogVisible: false,
+        dialogAddPhotoVisible: false,
+        dialogAddUserVisible: false,
         isPhotoLoading: false
       }
     },
     methods: {
       createPhoto(photo) {
-        this.photos.push(photo);
-        this.dialogVisible = false;
+        this.photos.unshift(photo);
+        this.dialogAddPhotoVisible = false;
       },
-      showDialog() {
-        this.dialogVisible = true;
+      createUser(user) {
+        this.users.push(user);
+        this.dialogAddUserVisible = false;
+      },
+      openAddPhotoForm() {
+        this.dialogAddPhotoVisible = true;
+      },
+      openAddUserForm() {
+        this.dialogAddUserVisible = true;
       },
       async fetchPhotos() {
         try {
@@ -80,11 +89,19 @@
       </ul>
     </section>
     <section class="photos">
-      <MyButton
-        @click="showDialog"
-      >
-        Добавить фото
-      </MyButton>
+      <div class="buttons">
+        <MyButton
+          @click="openAddPhotoForm"
+        >
+          Добавить фото
+        </MyButton>
+        <MyButton
+          @click="openAddUserForm"
+        >
+          Добавить пользователя
+        </MyButton>
+      </div>
+      
       <PhotosList
         v-bind:photosList="photos"
         v-if="!isPhotoLoading"
@@ -94,27 +111,22 @@
       </div>
     </section>
     <section>
-      <MyDialog 
-
-        v-model:show="dialogVisible"
-        id="createPhoto">
+      <MyDialog
+        v-model:show="dialogAddPhotoVisible"
+        >
         <h2 class="modal__title">Добавить фогографию</h2>
         <AddPhotoForm
           @create="createPhoto"
         />
       </MyDialog>
-      <div class="modal" id="createUser">
+      <MyDialog
+        v-model:show="dialogAddUserVisible"
+        >
         <h2 class="modal__title">Создать пользователя</h2>
-        <form class="form">
-          <input class="form__input" type="text" name="name" placeholder="Введите имя пользователя">
-          <input class="form__input" type="text" name="photo" placeholder="Введите ссылку на фотографию">
-          <input class="form__input" type="text" name="country" placeholder="Введите название страны">
-          <input class="form__input" type="text" name="city" placeholder="Введите название города">
-          <input class="form__input" type="number" name="exp" placeholder="Какой у вас опыт?">
-          <input class="form__input" type="text" name="type" placeholder="Введите жанры фотографий">
-          <MyButton>Создать</MyButton>
-        </form>
-      </div>
+        <AddUserForm
+          @create="createUser"
+        />
+      </MyDialog>
     </section>
   </main>
   <footer class="footer">
@@ -153,6 +165,7 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    min-width: 500px;
 
     display: flex;
     flex-direction: column;
@@ -181,10 +194,16 @@
     max-width: 1440px;
     width: 100%;
     margin: 30px auto 0;
-    padding: 45px;
+    padding: 20px 45px 45px;
   }
 
-  
+  .buttons {
+    display: flex;
+    margin-bottom: 40px;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+  }
 
   .modal__title {
     margin: 0;
