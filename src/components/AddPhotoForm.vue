@@ -28,29 +28,29 @@
 
 <template>
     <form class="form" @submit.prevent>
-        <myInput
+        <MyInput
             v-model="photo.url" 
             type="text" 
             name="url" 
             placeholder="Введите url на фото"  
         />
-        <myInput
+        <MyInput
             v-model="photo.title" 
             type="text" 
             name="name" 
             placeholder="Введите название"  
         />
-        <myInput
+        <MyInput
             v-model="photo.desc" 
             type="text" 
             name="desc" 
             placeholder="Введите описание"  
         />
-        <myButton
+        <MyButton
             @click="createPhoto"
         >
         Добавить
-        </myButton>
+        </MyButton>
     </form>
 </template>
 

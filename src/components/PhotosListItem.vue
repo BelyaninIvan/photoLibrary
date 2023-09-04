@@ -14,7 +14,7 @@
         <li class="item">
             <img :src="photoItem.url" :alt="photoItem.alt" class="item__image">
             <h2 class="item__name">{{ photoItem.title }}</h2>
-            <myButton>Подробнее</myButton>
+            <MyButton>Подробнее</MyButton>
             <p class="item__desc" style="display: none;">
                 {{ photoItem.desc }}
             </p>
@@ -25,9 +25,11 @@
 <style>
     .item {
         padding: 15px;
+        min-height: 520px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-between;
         background-color: rgba(240, 230, 140, 0.2);
         border-radius: 15px;
     }

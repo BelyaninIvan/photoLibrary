@@ -1,6 +1,9 @@
-import myButton from '@/components/UI/MyButton.vue';
-import myInput from '@/components/UI/MyInput.vue';
+import MyButton from '@/components/UI/MyButton.vue';
+import MyInput from '@/components/UI/MyInput.vue';
+import MyDialog from '@/components/UI/MyDialog.vue';
 
 export default [
-    myButton, myInput
+    MyButton,
+    MyInput,
+    MyDialog,
 ];

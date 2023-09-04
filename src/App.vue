@@ -2,6 +2,7 @@
   import HeaderComponent from '@/components/HeaderComponent.vue';
   import PhotosList from '@/components/PhotosList.vue';
   import AddPhotoForm from '@/components/AddPhotoForm.vue';
+  import axios from 'axios';
   
   export default {
     components: {
@@ -20,35 +21,33 @@
             type: 'Пейзажи, Макро'
           }
         ],
-        photos: [
-          {
-            id: '1',
-            url: 'https://tsaritsyno-museum.ru/uploads/2023/02/sady-2023-5.jpg',
-            alt: 'Фрагмент сада',
-            title: 'Фрагмент сада',
-            desc: 'На фотографии изображен фрагмент одного из садов представленных на конкурсе в музее-заповеднике "Царицыно"'
-          },
-          {
-            id: '2',
-            url: 'https://tsaritsyno-museum.ru/uploads/2023/02/sady-2023-5.jpg',
-            alt: 'Фрагмент сада',
-            title: 'Фрагмент сада',
-            desc: 'На фотографии изображен фрагмент одного из садов представленных на конкурсе в музее-заповеднике "Царицыно"'
-          },
-          {
-            id: '3',
-            url: 'https://tsaritsyno-museum.ru/uploads/2023/02/sady-2023-3.jpg',
-            alt: 'Фрагмент сада',
-            title: 'Фрагмент сада',
-            desc: 'На фотографии изображен фрагмент одного из садов представленных на конкурсе в музее-заповеднике "Царицыно"'
-          }
-        ]
+        photos: [],
+        dialogVisible: false,
+        isPhotoLoading: false
       }
     },
     methods: {
       createPhoto(photo) {
         this.photos.push(photo);
+        this.dialogVisible = false;
+      },
+      showDialog() {
+        this.dialogVisible = true;
+      },
+      async fetchPhotos() {
+        try {
+          this.isPhotoLoading = true;
+          const response = await axios.get('https://jsonplaceholder.typicode.com/photos?_limit=12');
+          this.photos = response.data;
+        } catch(e) {
+          alert('Ошибка')
+        } finally {
+          this.isPhotoLoading = false;
+        }
       }
+    },
+    mounted() {
+      this.fetchPhotos();
     }
   }
 </script>
@@ -81,17 +80,29 @@
       </ul>
     </section>
     <section class="photos">
+      <MyButton
+        @click="showDialog"
+      >
+        Добавить фото
+      </MyButton>
       <PhotosList
         v-bind:photosList="photos"
+        v-if="!isPhotoLoading"
       />
+      <div v-else>
+        Идет загрузка...
+      </div>
     </section>
     <section>
-      <div class="modal" id="createPhoto">
+      <MyDialog 
+
+        v-model:show="dialogVisible"
+        id="createPhoto">
         <h2 class="modal__title">Добавить фогографию</h2>
         <AddPhotoForm
           @create="createPhoto"
         />
-      </div>
+      </MyDialog>
       <div class="modal" id="createUser">
         <h2 class="modal__title">Создать пользователя</h2>
         <form class="form">
@@ -101,7 +112,7 @@
           <input class="form__input" type="text" name="city" placeholder="Введите название города">
           <input class="form__input" type="number" name="exp" placeholder="Какой у вас опыт?">
           <input class="form__input" type="text" name="type" placeholder="Введите жанры фотографий">
-          <myButton>Создать</myButton>
+          <MyButton>Создать</MyButton>
         </form>
       </div>
     </section>
@@ -173,16 +184,7 @@
     padding: 45px;
   }
 
-  .modal {
-    padding: 25px;
-    max-width: 520px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(240, 230, 140, 0.2);
-    border-radius: 15px;
-  }
+  
 
   .modal__title {
     margin: 0;
