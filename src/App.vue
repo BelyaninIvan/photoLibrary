@@ -27,28 +27,33 @@
             type: 'Пейзажи, Макро'
           },
           {
-            id: '1', 
-            name: 'Белянин Иван', 
+            id: '2', 
+            name: 'Иммануил Поло', 
             url: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663659739_4-mykaleidoscope-ru-p-professionalnaya-gordost-instagram-4.jpg', 
-            country: 'Россия', 
-            city: 'Саратов', 
-            exp: '5', 
-            type: 'Пейзажи, Макро'
+            country: 'Испания', 
+            city: 'Мадрид', 
+            exp: '2', 
+            type: 'Портреты'
           },
           {
-            id: '1', 
-            name: 'Белянин Иван', 
+            id: '3', 
+            name: 'Уилл Круз', 
             url: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663659739_4-mykaleidoscope-ru-p-professionalnaya-gordost-instagram-4.jpg', 
-            country: 'Россия', 
-            city: 'Саратов', 
-            exp: '5', 
-            type: 'Пейзажи, Макро'
+            country: 'США', 
+            city: 'Нью-Йорк', 
+            exp: '25', 
+            type: 'Ч/Б, Животные'
           }
         ],
         photos: [],
         dialogAddPhotoVisible: false,
         dialogAddUserVisible: false,
-        isPhotoLoading: false
+        isPhotoLoading: false,
+        selectedSort: '',
+        sortOptions: [
+          {value: 'name', name: 'По имени'},
+          {value: 'country', name: 'По стране'}
+        ]
       }
     },
     methods: {
@@ -80,6 +85,13 @@
     },
     mounted() {
       this.fetchPhotos();
+    },
+    watch: {
+      selectedSort(newValue) {
+        this.users.sort((user1, user2) => {
+          return user1[newValue]?.localeCompare(user2[newValue])
+        })
+      }
     }
   }
 </script>
@@ -88,11 +100,6 @@
   <HeaderComponent/>
   <main>
     <section class="profile">
-      <UsersList
-        :UsersList="users"
-      />
-    </section>
-    <section class="photos">
       <div class="buttons">
         <MyButton
           @click="openAddPhotoForm"
@@ -104,7 +111,19 @@
         >
           Добавить пользователя
         </MyButton>
+
+        <MySelect 
+          v-model="selectedSort"
+          :options="sortOptions"
+        />
       </div>
+
+      <UsersList
+        :UsersList="users"
+      />
+    </section>
+    <section class="photos">
+      
       
       <PhotosList
         v-bind:photosList="photos"
