@@ -18,11 +18,14 @@ import PhotosListItem from '@/components/PhotosListItem.vue'
     <div>
         <h2 class="photos__title">Каталог фотографий</h2>
         <ul class="photos__list">
-            <PhotosListItem
-                v-for="photoItem in photosList"
-                v-bind:photoItem="photoItem"
-                @key="photoItem.id"
-            />
+            <transition-group name="photos-list">
+                <PhotosListItem
+                    v-for="photoItem in photosList"
+                    v-bind:photoItem="photoItem"
+                    :key="photoItem.id"
+                />
+            </transition-group>
+            
         </ul>
     </div>
 </template>
@@ -45,5 +48,19 @@ import PhotosListItem from '@/components/PhotosListItem.vue'
         column-gap: 100px;
         row-gap: 35px;
         justify-content: center;
+    }
+
+    .photos-list-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .photos-list-enter-active,
+    .photos-list-leave-active {
+        transition: all 1s ease;
+    }
+    .photos-list-enter-from,
+    .photos-list-leave-to {
+        opacity: 0;
+        transform: translateY(30px);
     }
 </style>

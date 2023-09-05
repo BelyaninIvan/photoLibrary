@@ -5,15 +5,17 @@
   import AddUserForm from '@/components/AddUserForm.vue';
   import UsersList from '@/components/UsersList.vue';
   import axios from 'axios';
+import MyInput from './components/UI/MyInput.vue';
   
   export default {
     components: {
-      HeaderComponent,
-      PhotosList,
-      AddPhotoForm,
-      AddUserForm,
-      UsersList
-    },
+    HeaderComponent,
+    PhotosList,
+    AddPhotoForm,
+    AddUserForm,
+    UsersList,
+    MyInput
+},
     data() {
       return {
         users: [
@@ -24,7 +26,7 @@
             country: 'Россия', 
             city: 'Саратов', 
             exp: '5', 
-            type: 'Пейзажи, Макро'
+            type: 'Пейзажи, Макро, Ч/Б'
           },
           {
             id: '2', 
@@ -33,7 +35,7 @@
             country: 'Испания', 
             city: 'Мадрид', 
             exp: '2', 
-            type: 'Портреты'
+            type: 'Портреты, Животные'
           },
           {
             id: '3', 
@@ -53,7 +55,8 @@
         sortOptions: [
           {value: 'name', name: 'По имени'},
           {value: 'country', name: 'По стране'}
-        ]
+        ],
+        searchQuery: ''
       }
     },
     methods: {
@@ -86,11 +89,14 @@
     mounted() {
       this.fetchPhotos();
     },
-    watch: {
-      selectedSort(newValue) {
-        this.users.sort((user1, user2) => {
-          return user1[newValue]?.localeCompare(user2[newValue])
+    computed: {
+      sortedUsers() {
+        return [...this.users].sort((user1, user2) => {
+          return user1[this.selectedSort]?.localeCompare(user2[this.selectedSort])
         })
+      },
+      sortedAndSerchedUsers() {
+        return this.sortedUsers.filter(user => user.type.toLowerCase().includes(this.searchQuery))
       }
     }
   }
@@ -118,8 +124,15 @@
         />
       </div>
 
+      <div class="buttons">
+        <MyInput
+          v-model="searchQuery"
+          placeholder="Поиск..."
+        />
+      </div>
+
       <UsersList
-        :UsersList="users"
+        :UsersList="sortedAndSerchedUsers"
       />
     </section>
     <section class="photos">
