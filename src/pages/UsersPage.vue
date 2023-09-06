@@ -5,16 +5,14 @@
   import AddUserForm from '@/components/AddUserForm.vue';
   import UsersList from '@/components/UsersList.vue';
   import axios from 'axios';
-  import MyInput from '@/components/UI/MyInput.vue';
   
   export default {
     components: {
-    HeaderComponent,
-    PhotosList,
-    AddPhotoForm,
-    AddUserForm,
-    UsersList,
-    MyInput
+      HeaderComponent,
+      PhotosList,
+      AddPhotoForm,
+      AddUserForm,
+      UsersList
 },
     data() {
       return {

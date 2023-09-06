@@ -36,6 +36,7 @@
 
     .profile__list {
         display: flex;
+        margin-top: 50px;
         flex-direction: column;
         align-items: center;
         row-gap: 35px;

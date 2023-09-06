@@ -9,12 +9,9 @@ const routes = [
         component: Main,
     },
     {
-        path: '/users', 
-        component: UsersPage,
-    },
-    {
         path: '/users/:id', 
         component: UserIdPage,
+        props: true
     },
 ];
 

@@ -8,7 +8,6 @@
 </script>
 
 <template>
-  <Navbar/>
   <div class="app">
     <router-view>
 

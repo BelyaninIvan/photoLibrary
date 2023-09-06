@@ -9,6 +9,10 @@ import PhotosListItem from '@/components/PhotosListItem.vue'
             photosList: {
                 type: Array,
                 required: true
+            },
+            idUser: {
+                type: String,
+                required: true
             }
         }
     }
@@ -22,7 +26,7 @@ import PhotosListItem from '@/components/PhotosListItem.vue'
                 <PhotosListItem
                     v-for="photoItem in photosList"
                     v-bind:photoItem="photoItem"
-                    :key="photoItem.id"
+                    :idUser="idUser"
                 />
             </transition-group>
             

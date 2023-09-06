@@ -4,22 +4,24 @@
             photoItem: {
                 type: Object,
                 required: true
+            },
+            idUser: {
+                type: String,
+                required: true
             }
         }
     }
 </script>
 
 <template>
-    <div>
-        <li class="item">
-            <img :src="photoItem.url" :alt="photoItem.alt" class="item__image">
-            <h2 class="item__name">{{ photoItem.title }}</h2>
-            <MyButton>Подробнее</MyButton>
-            <p class="item__desc" style="display: none;">
-                {{ photoItem.desc }}
-            </p>
-        </li>
-    </div>
+    <li class="item" v-if="photoItem.idUser === idUser">
+        <img :src="photoItem.url" :alt="photoItem.alt" class="item__image">
+        <h2 class="item__name">{{ photoItem.title }}</h2>
+        <MyButton>Подробнее</MyButton>
+        <p class="item__desc" style="display: none;">
+            {{ photoItem.desc }}
+        </p>
+    </li>
 </template>
 
 <style>
