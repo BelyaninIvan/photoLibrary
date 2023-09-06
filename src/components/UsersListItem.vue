@@ -33,6 +33,11 @@
                 <p class="profile__item-info">{{ userItem.type }}</p>
             </li>
         </ul>
+        <MyButton
+            @click="$router.push(`/users/${userItem.id}`)"
+        >
+            Перейти к фотографиям
+        </MyButton>
     </div>
     
 </template>

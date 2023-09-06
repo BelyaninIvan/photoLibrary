@@ -1,204 +1,21 @@
-<script >
-  import HeaderComponent from '@/components/HeaderComponent.vue';
-  import PhotosList from '@/components/PhotosList.vue';
-  import AddPhotoForm from '@/components/AddPhotoForm.vue';
-  import AddUserForm from '@/components/AddUserForm.vue';
-  import UsersList from '@/components/UsersList.vue';
-  import axios from 'axios';
-import MyInput from './components/UI/MyInput.vue';
-  
+<script>
+  import Navbar from '@/components/Navbar.vue'
   export default {
     components: {
-    HeaderComponent,
-    PhotosList,
-    AddPhotoForm,
-    AddUserForm,
-    UsersList,
-    MyInput
-},
-    data() {
-      return {
-        users: [
-          {
-            id: '1', 
-            name: 'Белянин Иван', 
-            url: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663659739_4-mykaleidoscope-ru-p-professionalnaya-gordost-instagram-4.jpg', 
-            country: 'Россия', 
-            city: 'Саратов', 
-            exp: '5', 
-            type: 'Пейзажи, Макро, Ч/Б'
-          },
-          {
-            id: '2', 
-            name: 'Иммануил Поло', 
-            url: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663659739_4-mykaleidoscope-ru-p-professionalnaya-gordost-instagram-4.jpg', 
-            country: 'Испания', 
-            city: 'Мадрид', 
-            exp: '2', 
-            type: 'Портреты, Животные'
-          },
-          {
-            id: '3', 
-            name: 'Уилл Круз', 
-            url: 'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663659739_4-mykaleidoscope-ru-p-professionalnaya-gordost-instagram-4.jpg', 
-            country: 'США', 
-            city: 'Нью-Йорк', 
-            exp: '25', 
-            type: 'Ч/Б, Животные'
-          }
-        ],
-        photos: [],
-        dialogAddPhotoVisible: false,
-        dialogAddUserVisible: false,
-        isPhotoLoading: false,
-        selectedSort: '',
-        sortOptions: [
-          {value: 'name', name: 'По имени'},
-          {value: 'country', name: 'По стране'}
-        ],
-        searchQuery: ''
-      }
-    },
-    methods: {
-      createPhoto(photo) {
-        this.photos.unshift(photo);
-        this.dialogAddPhotoVisible = false;
-      },
-      createUser(user) {
-        this.users.push(user);
-        this.dialogAddUserVisible = false;
-      },
-      openAddPhotoForm() {
-        this.dialogAddPhotoVisible = true;
-      },
-      openAddUserForm() {
-        this.dialogAddUserVisible = true;
-      },
-      async fetchPhotos() {
-        try {
-          this.isPhotoLoading = true;
-          const response = await axios.get('https://jsonplaceholder.typicode.com/photos?_limit=12');
-          this.photos = response.data;
-        } catch(e) {
-          alert('Ошибка')
-        } finally {
-          this.isPhotoLoading = false;
-        }
-      }
-    },
-    mounted() {
-      this.fetchPhotos();
-    },
-    computed: {
-      sortedUsers() {
-        return [...this.users].sort((user1, user2) => {
-          return user1[this.selectedSort]?.localeCompare(user2[this.selectedSort])
-        })
-      },
-      sortedAndSerchedUsers() {
-        return this.sortedUsers.filter(user => user.type.toLowerCase().includes(this.searchQuery))
-      }
+      Navbar
     }
   }
 </script>
 
 <template>
-  <HeaderComponent/>
-  <main>
-    <section class="profile">
-      <div class="buttons">
-        <MyButton
-          @click="openAddPhotoForm"
-        >
-          Добавить фото
-        </MyButton>
-        <MyButton
-          @click="openAddUserForm"
-        >
-          Добавить пользователя
-        </MyButton>
+  <Navbar/>
+  <div class="app">
+    <router-view>
 
-        <MySelect 
-          v-model="selectedSort"
-          :options="sortOptions"
-        />
-      </div>
-
-      <div class="buttons">
-        <MyInput
-          v-model="searchQuery"
-          placeholder="Поиск..."
-        />
-      </div>
-
-      <UsersList
-        :UsersList="sortedAndSerchedUsers"
-      />
-    </section>
-    <section class="photos">
-      
-      
-      <PhotosList
-        v-bind:photosList="photos"
-        v-if="!isPhotoLoading"
-      />
-      <div v-else>
-        Идет загрузка...
-      </div>
-    </section>
-    <section>
-      <MyDialog
-        v-model:show="dialogAddPhotoVisible"
-        >
-        <h2 class="modal__title">Добавить фогографию</h2>
-        <AddPhotoForm
-          @create="createPhoto"
-        />
-      </MyDialog>
-      <MyDialog
-        v-model:show="dialogAddUserVisible"
-        >
-        <h2 class="modal__title">Создать пользователя</h2>
-        <AddUserForm
-          @create="createUser"
-        />
-      </MyDialog>
-    </section>
-  </main>
-  <footer class="footer">
-    Подвал страницы
-  </footer>
+    </router-view>
+  </div>
 </template>
 
-<style scoped>
-  .profile {
-    max-width: 1440px;
-    width: 100%;
-    margin: 50px auto 0;
-
-  }
-
-  .photos {
-    max-width: 1440px;
-    width: 100%;
-    margin: 30px auto 0;
-    padding: 20px 45px 45px;
-  }
-
-  .buttons {
-    display: flex;
-    margin-bottom: 40px;
-    align-items: center;
-    justify-content: center;
-    column-gap: 50px;
-  }
-
-  .modal__title {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 700;
-    text-align: center;
-  }
-
- 
+<style>
+  
 </style>
