@@ -1,5 +1,4 @@
 import Main from '@/pages/Main.vue';
-import UsersPage from '@/pages/UsersPage.vue';
 import UserIdPage from '@/pages/UserIdPage.vue';
 import {createRouter, createWebHistory} from 'vue-router';
 
